@@ -1,13 +1,9 @@
 import scala.annotation.tailrec
 
 object MyModule {
+
   def abs(n: Int): Int =
     if (n < 0) -n else n
-
-  private def formatAbs(x: Int) = {
-    val msg = "The absolute value of %d is %d"
-    msg.format(x, abs(x))
-  }
 
   def factorial(n: Int): Int = {
     @tailrec
@@ -18,14 +14,26 @@ object MyModule {
     go(n, 1)
   }
 
-  //exercise 2.1
-  def fibonacci(n: Int): Int = {
-    if (n == 0) 0
-    else if (n <= 2) {
-      1
-    } else fibonacci(n - 1) + fibonacci(n - 2)
+  private def formatAbs(x: Int) = {
+    val msg = "The absolute value of %d is %d"
+    msg.format(x, abs(x))
   }
 
-  def main(args: Array[String]): Unit =
-    println(formatAbs(-42))
+  private def formatFactorial(n: Int) = {
+    val msg = "The factorial of %d id %d."
+    msg.format(n, factorial(n))
+  }
+
+  def formatResult(name: String, n: Int, f: Int => Int) = {
+    val msg = "The %s of %d is %d"
+    msg.format(name, n, f(n))
+  }
+
+
+  def main(args: Array[String]) = {
+    println(formatResult("absolute val", -42, abs))
+    println(formatResult("factorial", 10, factorial))
+
+  }
+
 }
