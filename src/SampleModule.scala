@@ -1,6 +1,6 @@
 import scala.annotation.tailrec
 
-object MyModule {
+object SampleModule {
 
   def abs(n: Int): Int =
     if (n < 0) -n else n
@@ -12,6 +12,14 @@ object MyModule {
       else go(n - 1, n * acc)
 
     go(n, 1)
+  }
+
+  val lessThan = new ((Int, Int) => Boolean) {
+    def apply(a: Int, b: Int) = a < b
+  }
+
+  def partial1[A, B, C](a: A, f: (A, B) => C): B => C = {
+    b => f(a, b)
   }
 
   private def formatAbs(x: Int) = {
@@ -42,9 +50,9 @@ object MyModule {
 
 
   def main(args: Array[String]): Unit = {
-//    println(formatResult("absolute val", -42, abs))
-//    println(formatResult("factorial", 10, factorial))
-    val array = Array("hello","world","scala");
+    //    println(formatResult("absolute val", -42, abs))
+    //    println(formatResult("factorial", 10, factorial))
+    val array = Array("hello", "world", "scala");
     println(findFirst(array, (s: String) => s == "scala"))
 
   }
