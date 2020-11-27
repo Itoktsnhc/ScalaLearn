@@ -94,10 +94,6 @@ dropped—we don’t need to make a copy of the entire List.
     foldRight(as, z)((a, b) => f(b, a))
   }
 
-  def foldRightViaFoldLeft[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
-    foldLeft(as, z)((a, b) => f(b, a))
-  }
-
 
   //exercise 3.14
   def appendFold[A](a1: List[A], a2: List[A]): List[A] =
@@ -113,6 +109,10 @@ dropped—we don’t need to make a copy of the entire List.
 
   def concat1[A](l: List[List[A]]): List[A] = foldLeft(l, Nil: List[A])((x, y) => append(y, x))
 
+  def map[A, B](as: List[A])(f: A => B): List[B] = {
+    foldRight(as, List[B]())((x, y) => f(x) :: y)
+  }
+
   def main(args: Array[String]): Unit = {
     println(setHeader(List(1, 2, 3), 5))
     println(drop(List(1, 2, 3, 4, 5, 6), 3))
@@ -127,5 +127,6 @@ dropped—we don’t need to make a copy of the entire List.
     val listOfList = List(list, list, list)
     println(concat(listOfList))
     println(concat1(listOfList))
+    println(map(list)(x => x * 3))
   }
 }
