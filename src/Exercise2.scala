@@ -1,6 +1,6 @@
 import scala.annotation.tailrec
 
-object Exercise {
+object Exercise2 {
   //exercise 2.1
   def fibonacci(n: Int): Int = {
     if (n == 0) 0
@@ -48,24 +48,12 @@ implementation that compiles. Write this implementation.
     a => f(g(a))
   }
 
-  //exercise 3.2
-  /*
-  * Implement the function tail for removing the first element of a List.
-  * Note that the function takes constant time.
-  * What are different choices you could make in your implementation if the List is Nil?
-  * */
-  def tail(as: List[String]): List[String] = {
-    as match {
-      case Nil => Nil
-      case _ :: xs => xs
-    }
-  }
+
+
 
   def main(args: Array[String]): Unit = {
-    //    println(isSorted(Array(1, 2, 2, 4, 5), (i: Int, j: Int) => {
-    //      i <= j
-    //    }))
-    println(tail(List("123", "2345", "hello")))
-    ()
+    println(isSorted(Array(1, 2, 2, 4, 5), (i: Int, j: Int) => {
+      i <= j
+    }))
   }
 }

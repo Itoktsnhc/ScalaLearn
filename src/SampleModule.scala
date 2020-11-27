@@ -48,12 +48,20 @@ object SampleModule {
     loop(0)
   }
 
+  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B =
+    as match {
+      case Nil => z
+      case x :: xs => f(x, foldRight(xs, z)(f))
+    }
+
 
   def main(args: Array[String]): Unit = {
     //    println(formatResult("absolute val", -42, abs))
     //    println(formatResult("factorial", 10, factorial))
     val array = Array("hello", "world", "scala");
     println(findFirst(array, (s: String) => s == "scala"))
+    println(foldRight(List(1, 2, 3), Nil: List[Int])(_ :: _))
+
 
   }
 
