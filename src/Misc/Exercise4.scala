@@ -1,3 +1,5 @@
+package Misc
+
 object Exercise4 {
   def mean(xs: Seq[Double]): Option[Double] =
     if (xs.isEmpty) None

@@ -1,3 +1,5 @@
+package Misc
+
 import scala.annotation.tailrec
 
 object Exercise2 {
@@ -47,8 +49,6 @@ implementation that compiles. Write this implementation.
   def compose[A, B, C](f: B => C, g: A => B): A => C = {
     a => f(g(a))
   }
-
-
 
 
   def main(args: Array[String]): Unit = {

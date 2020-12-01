@@ -1,3 +1,5 @@
+package Misc
+
 import scala.annotation.tailrec
 
 object SampleModule {
