@@ -16,7 +16,7 @@ object SAL {
       case _ => List()
     }
 
-    def toList(): List[A] = {
+    def toList: List[A] = {
       @annotation.tailrec
       def go(s: Stream[A], acc: List[A]): List[A] = s match {
         case Cons(h, t) => go(t(), h() :: acc)
@@ -25,6 +25,13 @@ object SAL {
 
       go(this, List()).reverse
     }
+
+    def foldRight[B](z: => B)(f: (A, => B) => B): B =
+      this match {
+        case Cons(h, t) => f(h(), t().foldRight(z)(f))
+        case _ => z
+      }
+
 
     def toListFast: List[A] = {
       val buf = new collection.mutable.ListBuffer[A]
@@ -46,6 +53,16 @@ object SAL {
       case _ => Empty
     }
 
+    def forAll(p: A => Boolean): Boolean = this match {
+      case Cons(h, t) => p(h()) && t().forAll(p)
+      case _ => true
+    }
+
+    def takeWhileViaFoldRight(f: A => Boolean): Stream[A] =
+      foldRight(empty[A])((h, t) =>
+        if (f(h)) cons(h, t)
+        else empty)
+
     @annotation.tailrec
     final def drop(n: Int): Stream[A] = this match {
       case Cons(_, t) if n > 0 => t().drop(n - 1)
@@ -55,6 +72,11 @@ object SAL {
     def takeWhile(f: A => Boolean): Stream[A] = this match {
       case Cons(h, t) if f(h()) => cons(h(), t().takeWhile(f))
       case _ => Empty
+    }
+
+    def exists(p: A => Boolean): Boolean = this match {
+      case Cons(h, t) => p(h()) || t().exists(p)
+      case _ => false
     }
   }
 
@@ -81,10 +103,11 @@ object SAL {
   def main(args: Array[String]): Unit = {
 
     val stream = Stream.apply(1, 2, 3, 4, 5, 6, 7)
-    println(stream.toList())
-    println(stream.take(2).toList())
-    println(stream.takeWhile(x => x <= 3).toList())
-    println(stream.drop(2).toList())
+    println(stream.takeWhileViaFoldRight(x => x <= 3).toList)
+
+//    println(stream.toList)
+//    println(stream.take(2).toList)
+//    println(stream.drop(2).toList)
 
   }
 
